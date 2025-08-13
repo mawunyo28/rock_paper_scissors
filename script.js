@@ -1,5 +1,10 @@
 
 let choices = ["rock", "paper", "scissors"];
+let buttons = document.querySelectorAll("button");
+let computerScore = 0;
+let humanScore = 0;
+
+
 
 function getRandomInteger(min, max) {
   min = Math.ceil(min);
@@ -15,22 +20,26 @@ function getComputerChoice(choices) {
 }
 
 
-function getHumanChoice(choices) {
-  let user_choice = prompt(`Please enter a number that corresponds with the following choices:
-1. Rock
-2. Paper
-3. Scissors
-`);
+function getHumanChoice(/*choices */ btn) {
+  //   let user_choice = prompt(`Please enter a number that corresponds with the following choices:
+  // 1. Rock
+  // 2. Paper
+  // 3. Scissors
+  // `);
 
-  if (user_choice < 4) {
+  user_choice = btn.textContent.toLowerCase();
 
-    return user_choice = choices[parseInt(user_choice) - 1];
-  }
+  return user_choice;
+  //
+  // if (user_choice < 4) {
+  //
+  //   return user_choice = choices[parseInt(user_choice) - 1];
+  // }
 
 }
 
 
-function playRound(humanChoice, computerChoice, humanScore, computerScore) {
+function playRound(humanChoice, computerChoice) {
 
   for (i = 0; i < 3; i++) {
     if ((humanChoice == choices[i] && computerChoice == choices[i])) {
@@ -87,26 +96,30 @@ function playRound(humanChoice, computerChoice, humanScore, computerScore) {
 
   console.log("Human score" + humanScore);
   console.log("computerScore " + computerScore);
-  return [humanScore, computerScore];
 }
 
 function playGame() {
 
-  let computerScore = 0;
-  let humanScore = 0;
-  let results = [0, 0];
-
-
   let i = 0
   while (i < 5) {
-    let humanSelection = getHumanChoice(choices);
-    let computerSelection = getComputerChoice(choices);
-    results = playRound(humanSelection, computerSelection, humanScore, computerScore);
+    buttons.forEach((button) => {
+      button.addEventListener('click', (event) => {
+        humanSelection = getHumanChoice(button);
+        computerSelection = getComputerChoice(choices);
+        playRound(humanSelection, computerSelection);
 
-    computerScore = results[1];
-    humanScore = results[0];
+        event.stopImmediatePropagation();
+      });
+    });
+    // let humanSelection = getHumanChoice(choices);
+    // let computerSelection = getComputerChoice(choices);
+    // results = playRound(humanSelection, computerSelection, humanScore, computerScore);
+    //
+    // computerScore = results[1];
+    // humanScore = results[0]
     i += 1;
   }
+
 
   function checkScores() {
     if (computerScore == humanScore) {
@@ -123,6 +136,6 @@ function playGame() {
   alert(`At the end of this beautiful game\nYou scored ${humanScore} and the computer scored ${computerScore} meaning ${checkScores()}`);
 }
 
-
 playGame();
+
 
