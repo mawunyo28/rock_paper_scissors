@@ -104,6 +104,7 @@ computerScore: ${computerScore}
 
 function playGame() {
 
+  let i = 0;
   buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
       humanSelection = getHumanChoice(button);
@@ -111,24 +112,27 @@ function playGame() {
       playRound(humanSelection, computerSelection);
 
       event.stopImmediatePropagation();
+
+      i++;
     });
   });
 
-  function checkScores() {
-    if (computerScore == humanScore) {
-      return "It was a draw!";
-    }
-    else if (computerScore > humanScore) {
-      return "You lost!";
-    }
-    else {
-      return "You won";
-    }
-  }
-
-  divAppendMessage(`At the end of this beautiful game\nYou scored ${humanScore} and the computer scored ${computerScore} meaning ${checkScores()}`);
 }
 
 playGame();
+// function checkScores() {
+//   if (computerScore == humanScore) {
+//     return "It was a draw!";
+//   }
+//   else if (computerScore > humanScore) {
+//     return "You lost!";
+//   }
+//   else {
+//     return "You won";
+//   }
+// }
+//
+//
+//
 
 
