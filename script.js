@@ -2,6 +2,7 @@
 let choices = ["rock", "paper", "scissors"];
 let computerScore = 0;
 let humanScore = 0;
+let counter = 0;
 
 let buttons = document.querySelectorAll("button");
 let div = document.querySelector("div");
@@ -104,7 +105,6 @@ computerScore: ${computerScore}
 
 function playGame() {
 
-  let i = 0;
   buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
       humanSelection = getHumanChoice(button);
@@ -113,26 +113,35 @@ function playGame() {
 
       event.stopImmediatePropagation();
 
-      i++;
+      counter += 1;
+
     });
   });
+
+
+  intervalId = setInterval(() => {
+    if (counter > 4) {
+      // clearInterval(intervalId);
+      if (computerScore == humanScore) {
+        divAppendMessage(`At the end: ComputerScore ${computerScore} HumanScore ${humanScore} \nIt was a draw!`);
+      }
+      else if (computerScore > humanScore) {
+        divAppendMessage(`At the end: ComputerScore ${computerScore} HumanScore ${humanScore} \nYou Lost!`);
+      }
+      else {
+        divAppendMessage(`At the end: ComputerScore ${computerScore} HumanScore ${humanScore} \nYou Won!`);
+      }
+
+      counter = 0;
+      humanScore = 0;
+      computerScore = 0;
+
+    }
+
+  }, 2);
 
 }
 
 playGame();
-// function checkScores() {
-//   if (computerScore == humanScore) {
-//     return "It was a draw!";
-//   }
-//   else if (computerScore > humanScore) {
-//     return "You lost!";
-//   }
-//   else {
-//     return "You won";
-//   }
-// }
-//
-//
-//
 
 
